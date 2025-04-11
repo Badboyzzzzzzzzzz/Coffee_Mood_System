@@ -6,7 +6,7 @@ try {
 
     // db name
     define("DB_NAME", "coffee_shop");
-    +
+    
 
     // user
     define("USER", "root");

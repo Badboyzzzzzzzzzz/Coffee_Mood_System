@@ -1,16 +1,15 @@
 <?php require "../include/header.php"; ?>
 <?php require "../config/config.php"; ?>
-
 <?php
 if (isset($_POST["username"])) {
   header("location" . APPURL . "");
 }
 
+
 if (isset($_POST['submit'])) {
-  if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password'])) {
+  if (empty($_POST['email']) || empty($_POST['password'])) {
     echo "All fields are required";
   } else {
-    $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -20,21 +19,25 @@ if (isset($_POST['submit'])) {
       exit();
     }
 
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
     try {
-      // Insert into database
-      $insert = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :hashed_password)");
+      // Fetch user by email
+      $login = $conn->prepare("SELECT * FROM users WHERE email = :email");
+      $login->execute([':email' => $email]);
 
-      $insert->execute([
-        ':username' => $username,
-        ':email' => $email,
-        ':hashed_password' => $hashed_password
-      ]);
+      $fetch = $login->fetch(PDO::FETCH_ASSOC);
 
-      header('Location: login.php');
-      exit();
+      if ($fetch && password_verify($password, $fetch['password'])) {
+        // Start session and redirect
+
+        $_SESSION['user_id'] = $fetch['id'];
+        $_SESSION['username'] = $fetch['username'];
+        $_SESSION['email'] = $fetch['email'];
+
+        header('Location: ' . APPURL . "");
+        exit();
+      } else {
+        echo 'Invalid email or password';
+      }
     } catch (PDOException $e) {
       echo "Error: " . $e->getMessage();
     }
@@ -42,18 +45,16 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-?>
-
 <section class="home-slider owl-carousel">
 
-  <div class="slider-item" style="background-image: url(<?php echo APPURL; ?>/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
+  <div class="slider-item" style="background-image: url(<?php echo APPURL ?>/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
       <div class="row slider-text justify-content-center align-items-center">
 
         <div class="col-md-7 col-sm-12 text-center ftco-animate">
-          <h1 class="mb-3 mt-5 bread">Register</h1>
-          <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Register</span></p>
+          <h1 class="mb-3 mt-5 bread">Login</h1>
+          <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Login</span></p>
         </div>
 
       </div>
@@ -65,15 +66,9 @@ if (isset($_POST['submit'])) {
   <div class="container">
     <div class="row">
       <div class="col-md-12 ftco-animate">
-        <form action="register.php" method="POST" class="billing-form ftco-bg-dark p-3 p-md-5">
-          <h3 class="mb-4 billing-heading">Register</h3>
+        <form action="login.php" method="POST" class="billing-form ftco-bg-dark p-3 p-md-5">
+          <h3 class="mb-4 billing-heading">Login</h3>
           <div class="row align-items-end">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="Username">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Username">
-              </div>
-            </div>
             <div class="col-md-12">
               <div class="form-group">
                 <label for="Email">Email</label>
@@ -91,11 +86,10 @@ if (isset($_POST['submit'])) {
             <div class="col-md-12">
               <div class="form-group mt-4">
                 <div class="radio">
-                  <button class="btn btn-primary py-3 px-4" name="submit">Register</button>
+                  <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Login</button>
                 </div>
               </div>
             </div>
-
 
         </form><!-- END -->
       </div> <!-- .col-md-8 -->

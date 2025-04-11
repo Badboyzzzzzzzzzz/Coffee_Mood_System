@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 define("APPURL", "http://localhost:3000/");
 ?>
 
@@ -42,9 +45,26 @@ define("APPURL", "http://localhost:3000/");
           <li class="nav-item"><a href="<?php echo APPURL; ?>services.html" class="nav-link">Services</a></li>
           <li class="nav-item"><a href="<?php echo APPURL; ?>about.html" class="nav-link">About</a></li>
           <li class="nav-item"><a href="<?php echo APPURL; ?>contact.html" class="nav-link">Contact</a></li>
-          <li class="nav-item cart"><a href="<?php echo APPURL; ?>cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
-          <li class="nav-item"><a href="<?php echo APPURL; ?>login.html" class="nav-link">Login</a></li>
-          <li class="nav-item"><a href="<?php echo APPURL; ?>register.html" class="nav-link">Register</a></li>
+
+          <?php if (isset($_SESSION['username'])): ?>
+            <li class="nav-item cart"><a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                <?php echo $_SESSION['username']; ?>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="<?php echo APPURL; ?>/auth/logout.php">Logout</a></li>
+              </ul>
+            </li>
+          <?php else: ?>
+            <li class="nav-item"><a href="<?php echo APPURL; ?>/auth/login.php" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="<?php echo APPURL; ?>/auth/register.php" class="nav-link">Register</a></li>
+          <?php endif; ?>
         </ul>
       </div>
     </div>
@@ -52,9 +72,10 @@ define("APPURL", "http://localhost:3000/");
   <!-- END nav -->
 
   <!-- Required JS Scripts -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>
