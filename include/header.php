@@ -34,17 +34,17 @@ define("APPURL", "http://localhost:3000/");
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a class="navbar-brand" href="<?php echo APPURL; ?>index.html">Coffee<small>Blend</small></a>
+      <a class="navbar-brand" href="<?php echo APPURL; ?>index.php">Coffee<small>Blend</small></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> Menu
       </button>
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="<?php echo APPURL; ?>index.html" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="<?php echo APPURL; ?>menu.html" class="nav-link">Menu</a></li>
-          <li class="nav-item"><a href="<?php echo APPURL; ?>services.html" class="nav-link">Services</a></li>
-          <li class="nav-item"><a href="<?php echo APPURL; ?>about.html" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="<?php echo APPURL; ?>contact.html" class="nav-link">Contact</a></li>
+          <li class="nav-item active"><a href="<?php echo APPURL; ?>index.php" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="<?php echo APPURL; ?>menu.php" class="nav-link">Menu</a></li>
+          <li class="nav-item"><a href="<?php echo APPURL; ?>services.php" class="nav-link">Services</a></li>
+          <li class="nav-item"><a href="<?php echo APPURL; ?>about.php" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="<?php echo APPURL; ?>contact.php" class="nav-link">Contact</a></li>
 
           <?php if (isset($_SESSION['username'])): ?>
             <li class="nav-item cart"><a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
@@ -53,8 +53,8 @@ define("APPURL", "http://localhost:3000/");
                 <?php echo $_SESSION['username']; ?>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="<?php echo APPURL ?>/users/bookings.php">Your Booking</a></li>
+                <li><a class="dropdown-item" href="<?php echo APPURL ?>/users/orders.php">Your Orders</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>

@@ -83,19 +83,6 @@ if (isset($_GET['id'])) {
                 <p><?php echo $product->description ?></p>
                 <form method="POST" action="product-single.php?id=<?php echo $product->id ?>">
                     <div class="row mt-4">
-                        <!-- <div class="col-md-6">
-                            <div class="form-group d-flex">
-                                <div class="select-wrap">
-                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                    <select name="" id="" class="form-control">
-                                        <option value="">Small</option>
-                                        <option value="">Medium</option>
-                                        <option value="">Large</option>
-                                        <option value="">Extra Large</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="w-100"></div>
                         <div class="input-group col-md-6 d-flex mb-3">
                             <span class="input-group-btn mr-2">
@@ -118,10 +105,14 @@ if (isset($_GET['id'])) {
                             <input name="price" value="<?php echo $product->price ?>" type="hidden">
                             <input name="pro_id" value="<?php echo $product->id ?>" type="hidden">
                             <input name="description" value="<?php echo $product->description ?>" type="hidden">
-                            <?php if ($rowCount > 0): ?>
-                                <button name="submit" type="submit" class="btn btn-primary py-3 px-5" disabled>Add to Cart</button>
+                            <?php if (isset($_SESSION["user_id"])): ?>
+                                <?php if ($rowCount > 0): ?>
+                                    <button name="submit" type="submit" class="btn btn-primary py-3 px-5" disabled>Add to Cart</button>
+                                <?php else: ?>
+                                    <button name="submit" type="submit" class="btn btn-primary py-3 px-5">Add to Cart</button>
+                                <?php endif; ?>
                             <?php else: ?>
-                                <button name="submit" type="submit" class="btn btn-primary py-3 px-5">Add to Cart</button>
+                                <P>Login to add the product to cart</p>
                             <?php endif; ?>
                         </div>
                 </form>
