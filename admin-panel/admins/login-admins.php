@@ -2,10 +2,9 @@
 <?php require "../../config/config.php"; ?>
 
 <?php
-// if (isset($_POST["username"])) {
-//   header("location" . APPURL . "");
-// }
-
+if (isset($_SESSION['admin_name'])) {
+  header("Location: " . ADMINURL . "/admin.php");
+}
 
 if (isset($_POST['submit'])) {
   if (empty($_POST['email']) || empty($_POST['password'])) {
@@ -30,11 +29,12 @@ if (isset($_POST['submit'])) {
       if ($fetch && password_verify($password, $fetch['password'])) {
         // Start session and redirect
 
-        // $_SESSION['user_id'] = $fetch['id'];
-        // $_SESSION['username'] = $fetch['username'];
-        // $_SESSION['email'] = $fetch['email'];
+        $_SESSION['admin_name'] = $fetch['adminname'];
+        $_SESSION['email'] = $fetch['email'];
+        $_SESSION['admin_id'] = $fetch['id'];
 
-        header('Location: ' . ADMINURL . "");
+
+        header("Location: " . ADMINURL . "/admin.php");
         exit();
       } else {
         echo 'Invalid email or password';

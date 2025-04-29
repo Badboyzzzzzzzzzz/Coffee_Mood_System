@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 define("APPURL", "http://localhost:3000/");
+define("IMAGEURLPRODUCTS", "http://localhost:3000/images/products/");
 ?>
 
 <!DOCTYPE html>

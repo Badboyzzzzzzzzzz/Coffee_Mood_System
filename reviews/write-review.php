@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
             ":review" => $review,
             ":username" => $username,
         ]);
-        header("location: " . APPURL . "");
+        header("location: " . APPURL . "/users/bookings.php");
     }
 }
 ?>

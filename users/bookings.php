@@ -8,7 +8,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $booking = $conn->query("SELECT * FROM bookings WHERE user_id='$_SESSION[user_id]' ");
 $booking->execute();
-
 $allBookings = $booking->fetchAll(PDO::FETCH_OBJ);
 ?>
 
@@ -51,17 +50,14 @@ $allBookings = $booking->fetchAll(PDO::FETCH_OBJ);
                             <tbody>
                                 <?php foreach ($allBookings as $booking) : ?>
                                     <tr class="text-center">
-                                        <td class="product-remove"><?php echo $booking->first_name; ?></td>
-                                        <td class="image-prod"><?php echo $booking->last_name; ?></td>
-
-                                        <td class="product-name">
-                                            <h3><?php echo $booking->date; ?></h3>
-                                            <p><?php echo $booking->time; ?></p>
-                                        </td>
-                                        <td class="price"><?php echo $booking->phone; ?></td>
-                                        <td> <?php echo $booking->message; ?></td>
-                                        <td class="total"><?php echo $booking->status; ?></td>
-                                        <?php if ($booking->status == "Done"): ?>
+                                        <td><?php echo htmlspecialchars($booking->first_name); ?></td>
+                                        <td><?php echo htmlspecialchars($booking->last_name); ?></td>
+                                        <td><?php echo htmlspecialchars($booking->date); ?></td>
+                                        <td><?php echo htmlspecialchars($booking->time); ?></td>
+                                        <td><?php echo htmlspecialchars($booking->phone); ?></td>
+                                        <td><?php echo htmlspecialchars($booking->message); ?></td>
+                                        <td><?php echo htmlspecialchars($booking->status); ?></td>
+                                        <?php if ($booking->status == "Delivered"): ?>
                                             <td class="total">
                                                 <a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">Write Review</a>
                                             </td>
